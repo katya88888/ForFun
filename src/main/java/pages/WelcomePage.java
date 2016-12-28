@@ -7,41 +7,44 @@ import org.openqa.selenium.support.FindBy;
 /**
  * Created by numash on 26.12.2016.
  */
-public class LoginPage extends AbstractPage{
+public class WelcomePage extends AbstractPage{
 
     @FindBy(id = "index_email")
-    private WebElement usernameField;
+    private WebElement emailField;
     @FindBy(id = "index_pass")
     private WebElement passwordField;
     @FindBy(id = "index_login_button")
     private WebElement loginBtn;
+    @FindBy(id = "index_expire")
+    private WebElement dontRememberMeCheckbox;
 
-    public LoginPage(WebDriver driver) {
+    public WelcomePage(WebDriver driver) {
         super(driver);
     }
 
-    public String getUrl() {
-        return "https://vk.com";
+    public String getRelativeUrl() {
+        return "";
     }
 
-    public static LoginPage loginPage(WebDriver driver){
-        LoginPage page = new LoginPage(driver);
+    public static WelcomePage welcomePage(WebDriver driver){
+        WelcomePage page = new WelcomePage(driver);
         page.open();
 
         return page;
     }
 
-    public LoginPage login(String username, String password){
+    public WelcomePage login(String username, String password){
         setUsername(username);
         setPassword(password);
+        checkDontRememberMe();
         clickOnLogin();
 
         return this;
     }
 
     public void setUsername(String username){
-        usernameField.clear();
-        usernameField.sendKeys(username);
+        emailField.clear();
+        emailField.sendKeys(username);
     }
 
     public void setPassword(String password) {
@@ -51,5 +54,12 @@ public class LoginPage extends AbstractPage{
 
     public void clickOnLogin() {
         loginBtn.click();
+    }
+
+    public void checkDontRememberMe(){
+        if (dontRememberMeCheckbox.isSelected()){
+            return;
+        }
+        dontRememberMeCheckbox.click();
     }
 }

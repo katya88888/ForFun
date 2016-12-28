@@ -7,6 +7,8 @@ import org.openqa.selenium.support.PageFactory;
  * Created by numash on 25.12.2016.
  */
 public abstract class AbstractPage{
+    protected static final String BASE_URL = "https://vk.com/";
+
     protected WebDriver driver;
 
     public AbstractPage(WebDriver driver) {
@@ -15,17 +17,14 @@ public abstract class AbstractPage{
     }
 
     public void open() {
-        driver.get(getUrl());
+        driver.get(getFullUrl());
     }
 
-    public abstract String getUrl();
+    public abstract String getRelativeUrl();
 
-    public String getTitle() {
-        return driver.getTitle();
-    }
-
-    public String getCurrentUrl() {
-        return driver.getCurrentUrl();
+    public String getFullUrl(){
+        String s = BASE_URL + getRelativeUrl();
+        return s;
     }
 
 }
