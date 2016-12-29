@@ -1,7 +1,9 @@
 package tests;
 
+import com.beust.jcommander.Parameter;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import pages.FeedPage;
 
@@ -15,7 +17,6 @@ import java.util.ResourceBundle;
  * Created by numash on 26.12.2016.
  */
 public class FeedTests extends BaseTest{
-    private static final String EMAIL = ResourceBundle.getBundle("application").getString("email");
 
     private static FeedPage feedPage;
 

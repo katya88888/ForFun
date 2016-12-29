@@ -29,36 +29,13 @@ public class BaseTest {
     @BeforeSuite
     public void beforeSuite() {
         driver = new FirefoxDriver();
-        driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
 
     @BeforeMethod
     public void beforeMethod() {
         softAssert = new SoftAssert();
-    }
-
-
-    /*@AfterMethod
-    public void takeScreenShot(ITestResult testResult) throws IOException {
-        if (testResult.getStatus() == ITestResult.FAILURE) {
-            snapScreenShot("failure", testResult.getName());
-        } else if (testResult.getStatus() == ITestResult.SUCCESS) {
-            snapScreenShot("passed", testResult.getName());
-        }
-    }*/
-
-    @AfterSuite
-    public void afterTest() {
-        driver.quit();
-    }
-
-    private void snapScreenShot(String folder, String name) throws IOException {
-        File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-        String fileName = "\\Snapshots\\" + folder + "\\" + name + "_" +
-                new SimpleDateFormat("yyyy-MM-dd HH-mm-ss").format(new Date()) + ".jpg";
-        String filePath = System.getProperties().get("user.dir") + fileName;
-        FileUtils.copyFile(scrFile, new File(filePath));
     }
 
     public void savePicture(WebElement picture){
@@ -77,6 +54,30 @@ public class BaseTest {
         }catch(Exception e){
             e.printStackTrace();
         }
+    }
+
+    //@AfterMethod
+    public void takeScreenShot(ITestResult testResult) throws IOException {
+        if (testResult.getStatus() == ITestResult.FAILURE) {
+            snapScreenShot("failure", testResult.getName());
+        } else if (testResult.getStatus() == ITestResult.SUCCESS) {
+            snapScreenShot("passed", testResult.getName());
+        }
+    }
+
+    //@AfterSuite
+    public void afterSuite() {
+        driver.close();
+        driver.get("localhost:8080");
+        //driver.quit();
+    }
+
+    private void snapScreenShot(String folder, String name) throws IOException {
+        File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+        String fileName = "\\Snapshots\\" + folder + "\\" + name + "_" +
+                new SimpleDateFormat("yyyy-MM-dd HH-mm-ss").format(new Date()) + ".jpg";
+        String filePath = System.getProperties().get("user.dir") + fileName;
+        FileUtils.copyFile(scrFile, new File(filePath));
     }
 
     private String parsePictureStyleAttribute(WebElement picture){

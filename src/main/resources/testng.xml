@@ -3,6 +3,13 @@
 
 <suite name="For fun project suite" verbose="1" >
 
+    <test name="Test" enabled="false">
+        <classes>
+            <class name="tests.test"/>
+        </classes>
+    </test>
+
+
     <test name="Login" enabled="false">
         <classes>
             <class name="tests.LoginTests">
@@ -15,16 +22,18 @@
     </test>
 
     <test name="Feed" enabled="true">
+        <parameter name="wordToSearch" value="Новый год"/>
         <classes>
             <class name="tests.LoginTests">
                 <methods>
                     <include name="positiveLoginTest"/>
-                    <exclude name="negativeLoginTest"/>
+                    <include name="negativeLoginTest"/>
                 </methods>
             </class>
-            <class name="tests.FeedTests">
+            <class name="tests.SearchTests">
                 <methods>
-                    <include name="savePicture"/>
+                    <include name="searchAndSendStatistics"/>
+                    <include name="searchAndPlayAudio"/>
                 </methods>
             </class>
         </classes>

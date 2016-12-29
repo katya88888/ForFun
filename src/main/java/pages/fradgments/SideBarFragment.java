@@ -22,8 +22,15 @@ public class SideBarFragment extends AbstractFragment {
         return sideBarLinksList;
     }
 
+    public void clickOnMessagesLink(){
+        getMessagesLink().click();
+    }
+
     public WebElement getMyProfileLink(){
-        WebElement el = sideBarLinksList.get(0);
-        return el;
+        return sideBarLinksList.get(0);
+    }
+
+    public WebElement getMessagesLink(){
+        return sideBarLinksList.get(2);
     }
 }

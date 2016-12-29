@@ -3,6 +3,9 @@ package pages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import pages.fradgments.FooterFragment;
+import pages.fradgments.HeaderFragment;
+import pages.fradgments.SideBarFragment;
 
 /**
  * Created by numash on 26.12.2016.
@@ -24,6 +27,21 @@ public class WelcomePage extends AbstractPage{
 
     public String getRelativeUrl() {
         return "";
+    }
+
+    @Override
+    public HeaderFragment getHeader() {
+        return header;
+    }
+
+    @Override
+    public FooterFragment getFooter() {
+        return footer;
+    }
+
+    @Override
+    public SideBarFragment getSideBar() {
+        return null;
     }
 
     public static WelcomePage welcomePage(WebDriver driver){

@@ -27,7 +27,7 @@ public class LoginTests extends BaseTest{
         welcomePage = WelcomePage.welcomePage(driver);
     }
 
-    @Test(groups = "positiveLogin"/*, dependsOnGroups = "negativeLogin"*/)
+    @Test(groups = "positiveLogin", dependsOnGroups = "negativeLogin")
     public void positiveLoginTest(){
         welcomePage.login(LOGIN, PASSWORD);
 
@@ -40,10 +40,10 @@ public class LoginTests extends BaseTest{
     @DataProvider
     public Object[][] negativeLoginData(){
         return new Object[][]{
-                {"", "321"},
-                {"admin", ""},
+                {"", "pass"},
+                {"login", ""},
                 {"", ""},
-                {"admin", "321"}
+                {"login", "pass"}
         };
     }
 
