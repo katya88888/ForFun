@@ -5,15 +5,18 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.FeedPage;
 import pages.WelcomePage;
+import ru.yandex.qatools.allure.annotations.Step;
 
 import java.util.ResourceBundle;
 
 /**
  * Created by numash on 26.12.2016.
  */
+@Listeners(BaseTest.class)
 public class LoginTests extends BaseTest{
     private static final String LOGIN = ResourceBundle.getBundle("application").getString("login");
     private static final String PASSWORD = ResourceBundle.getBundle("application").getString("password");

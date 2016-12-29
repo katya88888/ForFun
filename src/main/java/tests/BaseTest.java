@@ -1,28 +1,27 @@
 package tests;
 
-import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.ITestContext;
+import org.testng.ITestListener;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
+import ru.yandex.qatools.allure.annotations.Attachment;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 /**
  * Created by numash on 25.12.2016.
  */
-public class BaseTest {
+public class BaseTest implements ITestListener {
     protected static WebDriver driver;
     protected static SoftAssert softAssert;
 
@@ -56,29 +55,77 @@ public class BaseTest {
         }
     }
 
-    //@AfterMethod
+    @Override
+    public void onTestStart(ITestResult result) {
+    }
+
+    @Override
+    public void onTestSuccess(ITestResult result) {
+        saveScreenshot("Success in " + result.getMethod().toString());
+    }
+
+    @Override
+    public void onTestFailure(ITestResult result) {
+        saveScreenshot("Failure in " + result.getMethod().toString());
+    }
+
+    @Override
+    public void onTestSkipped(ITestResult result) {
+
+    }
+
+    @Override
+    public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
+
+    }
+
+    @Override
+    public void onStart(ITestContext context) {
+
+    }
+
+    @Override
+    public void onFinish(ITestContext context) {
+
+    }
+
+    /*@AfterMethod
+    public void afterMethod(){
+        saveScreenshot("Screenshot attach");
+    }*/
+
+    @Attachment(value = "{0}", type = "image/png")
+    public static byte[] saveScreenshot(String name) {
+        byte[] scrFile = null;
+        try {
+            scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.BYTES);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return scrFile;
+    }
+
+    /*@AfterMethod
     public void takeScreenShot(ITestResult testResult) throws IOException {
         if (testResult.getStatus() == ITestResult.FAILURE) {
             snapScreenShot("failure", testResult.getName());
         } else if (testResult.getStatus() == ITestResult.SUCCESS) {
             snapScreenShot("passed", testResult.getName());
         }
-    }
+    }*/
 
-    //@AfterSuite
+    @AfterSuite
     public void afterSuite() {
-        driver.close();
-        driver.get("localhost:8080");
-        //driver.quit();
+        driver.quit();
     }
 
-    private void snapScreenShot(String folder, String name) throws IOException {
+    /*private void snapScreenShot(String folder, String name) throws IOException {
         File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
         String fileName = "\\Snapshots\\" + folder + "\\" + name + "_" +
                 new SimpleDateFormat("yyyy-MM-dd HH-mm-ss").format(new Date()) + ".jpg";
         String filePath = System.getProperties().get("user.dir") + fileName;
         FileUtils.copyFile(scrFile, new File(filePath));
-    }
+    }*/
 
     private String parsePictureStyleAttribute(WebElement picture){
 
@@ -91,5 +138,4 @@ public class BaseTest {
 
         return url;
     }
-
 }
