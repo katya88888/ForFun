@@ -4,7 +4,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import pages.fradgments.FooterFragment;
 import pages.fradgments.HeaderFragment;
 import pages.fradgments.SideBarFragment;
 
@@ -20,25 +19,24 @@ public class SearchPage extends AbstractPage {
     @FindBy(xpath = ".//*[@class='audio_play_wrap']")
     private List<WebElement> audioList;
 
-    private static SideBarFragment sideBar;
-
     public SearchPage(WebDriver driver) {
         super(driver);
-        sideBar = new SideBarFragment(driver);
     }
 
     public String getRelativeUrl() {
         return "search";
     }
 
-    @Override
-    public HeaderFragment getHeader() {
-        return header;
+    public static SearchPage searchPage(WebDriver driver){
+        SearchPage page = new SearchPage(driver);
+        page.open();
+
+        return page;
     }
 
     @Override
-    public FooterFragment getFooter() {
-        return footer;
+    public HeaderFragment getHeader() {
+        return header;
     }
 
     @Override
@@ -57,16 +55,11 @@ public class SearchPage extends AbstractPage {
 
             statisticsData += title + " - " + resultNumber + "; ";
         }
-        System.out.println(statisticsData);
         return statisticsData;
     }
 
-    public WebElement getAudioElement(int index){
+    public void playAudioFile(int index){
         WebElement playButton = audioList.get(index).findElement(By.xpath("./button[contains(@id, 'play')]"));
-        return playButton;
-    }
-
-    public void playAudio(WebElement audioElement){
-        audioElement.click();
+        playButton.click();
     }
 }

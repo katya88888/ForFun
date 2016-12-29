@@ -1,5 +1,9 @@
 package tests;
 
+import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.WebResponse;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -15,7 +19,12 @@ import ru.yandex.qatools.allure.annotations.Attachment;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -37,20 +46,45 @@ public class BaseTest implements ITestListener {
         softAssert = new SoftAssert();
     }
 
-    public void savePicture(WebElement picture){
+    public void savePictures(List<WebElement> picturesList){
+
+        int counter = 0;
+        for (WebElement picture: picturesList) {
+            try {
+                String pictureURL = parsePictureStyleAttribute(picture);
+
+                URL imageURL = new URL(pictureURL);
+                BufferedImage saveImage = ImageIO.read(imageURL);
+
+                String pictureName = "picture_" + counter;
+                String fileName = "\\Pictures\\" + pictureName + ".png";
+                String filePath = System.getProperties().get("user.dir") + fileName;
+
+                ImageIO.write(saveImage, "png", new File(filePath));
+
+                counter++;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void savePage(String url, String name){
+
         try {
-            String pictureURL = parsePictureStyleAttribute(picture);
+            WebClient client = new WebClient();
+            client.getOptions().setUseInsecureSSL(true);
+            HtmlPage page = client.getPage(url);
 
-            URL imageURL = new URL(pictureURL);
-            BufferedImage saveImage = ImageIO.read(imageURL);
-
-            String pictureName = "first";
-            String fileName = "\\Pictures\\" + pictureName + ".png";
+            String fileName = "\\My feed\\" + name + "_" +
+                    new SimpleDateFormat("yyyy-MM-dd HH-mm-ss").format(new Date()) + ".html";
             String filePath = System.getProperties().get("user.dir") + fileName;
 
-            ImageIO.write(saveImage, "png", new File(filePath));
+            FileWriter writer = new FileWriter(filePath);
+            writer.write(page.getPage().asXml());
+            writer.close();
 
-        }catch(Exception e){
+        } catch (IOException e){
             e.printStackTrace();
         }
     }
@@ -88,11 +122,6 @@ public class BaseTest implements ITestListener {
     public void onFinish(ITestContext context) {
 
     }
-
-    /*@AfterMethod
-    public void afterMethod(){
-        saveScreenshot("Screenshot attach");
-    }*/
 
     @Attachment(value = "{0}", type = "image/png")
     public static byte[] saveScreenshot(String name) {

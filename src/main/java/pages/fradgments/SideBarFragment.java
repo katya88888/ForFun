@@ -3,6 +3,8 @@ package pages.fradgments;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import pages.FeedPage;
+import pages.MessagesPage;
 
 import java.util.List;
 
@@ -22,12 +24,22 @@ public class SideBarFragment extends AbstractFragment {
         return sideBarLinksList;
     }
 
-    public void clickOnMessagesLink(){
+    public MessagesPage clickOnMessagesLink(){
         getMessagesLink().click();
+        return new MessagesPage(driver);
+    }
+
+    public FeedPage clickOnFeedLink(){
+        getFeedLink().click();
+        return new FeedPage(driver);
     }
 
     public WebElement getMyProfileLink(){
         return sideBarLinksList.get(0);
+    }
+
+    public WebElement getFeedLink(){
+        return sideBarLinksList.get(1);
     }
 
     public WebElement getMessagesLink(){

@@ -3,7 +3,6 @@ package pages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import pages.fradgments.FooterFragment;
 import pages.fradgments.HeaderFragment;
 import pages.fradgments.SideBarFragment;
 
@@ -32,11 +31,6 @@ public class WelcomePage extends AbstractPage{
     @Override
     public HeaderFragment getHeader() {
         return header;
-    }
-
-    @Override
-    public FooterFragment getFooter() {
-        return footer;
     }
 
     @Override

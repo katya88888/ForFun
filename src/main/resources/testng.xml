@@ -2,44 +2,24 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
 <suite name="For fun project suite" verbose="1" >
+
     <listeners>
         <listener class-name="tests.BaseTest" />
     </listeners>
 
-    <test name="test" enabled="false">
-        <classes>
-            <class name="tests.test">
-                <methods>
-                    <include name="firstSimpleTest"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
+    <test name="Feed" enabled="true">
+        <parameter name="wordToSearch" value="Christmas"/>
+        <parameter name="picturesToSave" value="3"/>
 
-    <test name="Login" enabled="true">
         <classes>
             <class name="tests.LoginTests">
                 <methods>
                     <include name="positiveLoginTest"/>
-                    <include name="negativeLoginTest"/>
                 </methods>
             </class>
-        </classes>
-    </test>
-
-    <test name="Feed" enabled="false">
-        <parameter name="wordToSearch" value="Новый год"/>
-        <classes>
-            <class name="tests.LoginTests">
+            <class name="tests.ForFunTests">
                 <methods>
-                    <include name="positiveLoginTest"/>
-                    <exclude name="negativeLoginTest"/>
-                </methods>
-            </class>
-            <class name="tests.SearchTests">
-                <methods>
-                    <include name="searchAndSendStatistics"/>
-                    <include name="searchAndPlayAudio"/>
+                    <include name="myAwesomeScenario"/>
                 </methods>
             </class>
         </classes>

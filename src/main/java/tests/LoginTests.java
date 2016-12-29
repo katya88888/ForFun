@@ -9,7 +9,6 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.FeedPage;
 import pages.WelcomePage;
-import ru.yandex.qatools.allure.annotations.Step;
 
 import java.util.ResourceBundle;
 
@@ -30,7 +29,7 @@ public class LoginTests extends BaseTest{
         welcomePage = WelcomePage.welcomePage(driver);
     }
 
-    @Test(groups = "positiveLogin", dependsOnGroups = "negativeLogin")
+    @Test(groups = "positiveLogin"/*, dependsOnGroups = "negativeLogin"*/)
     public void positiveLoginTest(){
         welcomePage.login(LOGIN, PASSWORD);
 

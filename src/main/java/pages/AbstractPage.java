@@ -2,7 +2,6 @@ package pages;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
-import pages.fradgments.FooterFragment;
 import pages.fradgments.HeaderFragment;
 import pages.fradgments.SideBarFragment;
 
@@ -15,14 +14,12 @@ public abstract class AbstractPage{
     protected WebDriver driver;
 
     protected HeaderFragment header;
-    protected FooterFragment footer;
     protected SideBarFragment sideBar;
 
     public AbstractPage(WebDriver driver) {
         this.driver = driver;
 
         header = new HeaderFragment(driver);
-        footer = new FooterFragment(driver);
         sideBar = new SideBarFragment(driver);
 
         PageFactory.initElements(driver, this);
@@ -31,8 +28,6 @@ public abstract class AbstractPage{
     public abstract String getRelativeUrl();
 
     public abstract HeaderFragment getHeader();
-
-    public abstract FooterFragment getFooter();
 
     public abstract SideBarFragment getSideBar();
 
