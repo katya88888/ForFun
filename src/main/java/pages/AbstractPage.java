@@ -2,8 +2,8 @@ package pages;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
-import pages.fradgments.HeaderFragment;
-import pages.fradgments.SideBarFragment;
+import pages.fragments.HeaderFragment;
+import pages.fragments.SideBarFragment;
 
 /**
  * Created by numash on 25.12.2016.
